@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\View\View;
 
 class MainController extends Controller
@@ -115,4 +116,71 @@ class MainController extends Controller
             'answers' => $answers
         ]);
     }
+
+    public function answer($enc_answer)
+    {
+        try {
+            $answer = Crypt::decryptString($enc_answer);
+        } catch (\Exception $e) {
+            return redirect()->route('game');
+        }
+
+        $quiz = session ('quiz');
+        $current_question = session('current_question')-1;
+        $correct_answer = $quiz[$current_question]['correct_answer'];
+        $correct_answers = session('correct_answers');
+        $wrong_answers = session('wrong_answers');
+
+        if($answer == $correct_answer){
+            $correct_answers++;
+            $quiz[$current_question]['correct'] = true;
+        } else { 
+            $wrong_answers++;
+            $quiz[$current_question]['correct'] = false;
+        }
+
+        // Atualiza a sessão com a pontuação
+        session()->put(['quiz' => $quiz,'correct_answers' => $correct_answers,'wrong_answers' => $wrong_answers,]);
+
+        // Prepara os dados para apresentar opção correta
+        $data = [
+            'country' => $quiz[$current_question]['country'],
+            'correct_answer' => $correct_answer,
+            'choice_answer' => $answer,
+            'currentQuestion' => $current_question,
+            'totalQuestions' => session('total_questions')
+        ];
+
+        return view('answer_result')->with($data);
+    }
+
+    public function nextQuestion()
+    {
+        $current_question = session('current_question');
+        $total_questions = session('total_questions');
+
+        if($current_question < $total_questions){
+            $current_question++;
+            session()->put('current_question', $current_question);
+            return redirect()->route('game');
+        } else {
+            return redirect()->route('show_resultados');
+        }
+    }
+
+    public function showResultados()
+    {
+        $total_questions = session('total_questions');
+
+        return view('final_results')->with([
+            'correct_answers' => session('correct_answers'),
+            'wrong_answers' => session('wrong_answers'),
+            'total_questions' => session('total_questions'),
+            'percentage' => round(  session('correct_answers') / session('total_questions') * 100, 2)
+        ]);
+        
+    }
 }
+
+
+
