@@ -2,23 +2,13 @@
 
 <div class="container">
 
+    <x-pergunta :country="$country" :currentQuestion="$currentQuestion" :totalQuestions="$totalQuestions" />
+
     <div class="row">
 
-        <div class="col-6 text-center">
-            <p class="response-option">[CAPITAL 1]</p>
-        </div>
-
-        <div class="col-6 text-center">
-            <p class="response-option">[CAPITAL 2]</p>
-        </div>
-
-        <div class="col-6 text-center">
-            <p class="response-option">[CAPITAL 3]</p>
-        </div>
-
-        <div class="col-6 text-center">
-            <p class="response-option">[CAPITAL 4]</p>
-        </div>
+        @foreach ($answers as $answer)
+            <x-resposta :capital="$answer" />
+        @endforeach
 
     </div>
     
@@ -26,7 +16,7 @@
 
 <!-- cancel game -->
 <div class="text-center mt-5">
-    <a href="#" class="btn btn-outline-danger mt-3 px-5">CANCELAR JOGO</a>
+    <a href="{{ route('startGame') }}" class="btn btn-outline-danger mt-3 px-5">Cancelar jogo</a>
 </div>
 
 </x-main-layout>
