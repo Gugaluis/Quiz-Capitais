@@ -20,9 +20,6 @@ class pergunta extends Component
         $this->totalQuestions = $totalQuestions;
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.pergunta');
