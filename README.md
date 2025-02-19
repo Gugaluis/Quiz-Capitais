@@ -1,8 +1,8 @@
-# Math-X
+# Quiz-Capitais
 
 ## Descrição
 
-O **Countries & Capital** é um quiz online onde você precisa acertar a capital de um respectivo país. Utilizando funções do laravel e de PHP puro, criamos um array com todas as capitais do mundo para alimentar os dados das questões e sorteamos a informação que irá aparecer na tela.
+O **Countries & Capitals | Quiz-Capitais** é um quiz online onde você precisa acertar a capital de um respectivo país. Utilizando funções do laravel e de PHP puro, criamos um array com todas as capitais do mundo para alimentar os dados das questões e sorteamos a informação que irá aparecer na tela.
 Com o uso de componentes, criamos um código limpo, leve e reutilizável. 
 
 ## Imagem do Projeto 📸
@@ -29,7 +29,7 @@ Siga os passos abaixo para configurar o projeto em sua máquina local:
    - Abra o terminal e execute:
      ```bash
      git clone https://github.com/Gugaluis/Quiz-Capitais
-     cd notes
+     cd Quiz-Capitais
      ```
 
 2. **Instale as dependências com Composer**
